@@ -1,0 +1,140 @@
+#avatar {
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	background-image: url("assets/img/avatar.png");
+	background-size: cover;
+}
+.items {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.row {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.col-4 {
+	flex-basis: 25%;
+	padding: 10px;
+	min-width: 200px;
+	margin-bottom: 50px;
+}
+.col-4 img {
+	width: 100%;
+	height: 100%;
+}
+.title {
+	text-align: center;
+	margin: 0 auto 80px;
+	position: relative;
+	line-height: 60px;
+}
+.footer-content {
+	height: 150px;
+	width: 100vw;
+	background-color:black;
+	color: white;
+	display: flex;
+	justify-content: center;
+}
+.contact {
+	padding-right: 50px;
+}
+.contacts {
+	color: white;
+}
+.social {
+	padding-left: 50px;
+	color: white;
+	
+}
+.icons {
+	display:grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.icon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.footer-title {
+	margin-top: 10px;
+	font-size: 30px;
+}
+/**signup and login**/
+*{
+	font-family: sans-serif;
+	box-sizing: border-box;
+}
+
+form{
+	background: #1690A7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 110vh;
+	flex-direction: column;
+	text-align:"center";
+	width: 500px;
+	border: 2px solid #ccc;
+	padding: 30px;
+	background: #fff;
+	border-radius: 15px;
+}
+.ca {
+	font-size: 14px;
+	display: inline-block;
+	padding: 10px;
+	text-decoration: none;
+	color: #444;
+}
+.ca:hover {
+	text-decoration: underline;
+} 
+h2 {
+	text-align: center;
+	margin-bottom: 40px;
+}
+h1 {
+	text-align: center;
+	color: #fff;
+}
+
+label {
+	text-align:center;
+	color: #888;
+	font-size: 18px;
+	padding: 10px;
+}
+
+button {
+	float: right;
+	background: #555;
+	padding: 10px 15px;
+	color: #fff;
+	border-radius: 5px;
+	margin-right: 10px;
+	border: none;
+}
+button:hover{
+	opacity: .7;
+}
+
+/**.banner-area{
+	width:100%;
+	height:500px;
+	position:fixed;
+	top:100px;
+	background-image:url(ban.jpg);
+	-webkit-background-size:cover;
+	background-size:cover;
+	background-position:center center;
+}
+.banner-area{
+	padding-top:8%;
+	font-size:70px;
+	font-family:poppins;
+	text-transform: uppercase;
+	color::#fff
+}**/
