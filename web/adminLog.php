@@ -21,7 +21,6 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         header("Location: adminlogin.php?error=Password is required");
 	    exit();
 	}else{
-		$pass = md5($pass);
 		$sql = "SELECT * FROM admin WHERE AdminEmail='$email' AND AdminPassword='$pass'";
 
 		$result = mysqli_query($conn, $sql);
