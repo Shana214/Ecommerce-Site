@@ -1,26 +1,44 @@
+<?php
+session_start();
+if(isset($_POST['cartid'])){	
+	$_SESSION['cart'] = $_POST['cartid'];
+}	
+	
+if(isset($_POST['check'])){
+			
+	$_SESSION['mode'] = $_POST['choice'];
+	$_SESSION['Name'] = $_POST['name'];
+	$_SESSION['Contact'] = $_POST['contact'];
+	$_SESSION['Address'] = $_POST['address'];
+				
+}
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Cart</title>
+		<title>Payment</title>
 		<meta charset = "utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+		
 	</head>
 	<body>
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark pt-3 pb-3">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="userhomepage.php" style = "margin-right: 250px; margin-left: 50px; font-size: 20px;">LOGO</a>
+					<a class="navbar-brand" href="userhomepage.html" style = "margin-right: 250px; margin-left: 50px; font-size: 20px;">LOGO</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item">
-							    <a class="nav-link active " aria-current="page" href="userhomepage.php"style=" font-size: 20px; margin-right: 500px;">Home</a>
+							    <a class="nav-link active " aria-current="page" href="userhomepage.html"style=" font-size: 20px; margin-right: 500px;">Home</a>
 							</li>
 						</ul>
 						<ul class="navbar-nav ms-auto mb-2 mb-lg-0" style = "margin-right: 75px;">
@@ -34,6 +52,7 @@
 							    </a>
 							    <ul class="dropdown-menu me-auto" aria-labelledby="navbarDropdown">
 									<li><a class="dropdown-item" href="account.html">Account</a></li>
+									<li><a class="dropdown-item" href="settings.php">Settings</a></li>
 									<li><hr class="dropdown-divider"></li>
 									<li><a class="dropdown-item" href="logoff.php">Logout</a></li>
 							    </ul>
@@ -43,67 +62,76 @@
 				</div>
 			</nav>
 		</header>
+		<?php
+		 $conn = mysqli_connect('localhost', 'root', '', 'ecommerce');
+			 if (mysqli_connect_errno()) {
+				echo 'Failed to connect to MySQL server: ' . mysqli_connect_error();   
+				}
 		
-		<div class = "cart">
-		<div>
-			<div class = "breadcrumbs">
-			<h4><a href="userhomepage.html">Home</a>><a href="cart.php">Cart</a></h4>
-			</div>
-			<h2 class = "cart-title">CART</h2>
-			<div class = "cart-buttons">
-			<a href="cart-checkout.php"><button class="btn checkout">Checkout</button></a>
-			<a href="cart-remove.php"><button class="btn remove">Remove Item/s</button></a>
-			<a href="cart-edit.php"><button class="btn edit">Edit Item</button></a></br></br></br>
-			</div>
+		$cartid = $_SESSION['cart'];
+		$total = 0;
+		foreach($cartid as $id){
+				$CartID = $id;
+				$sql = "SELECT CartId, Quantity, TotalAmount FROM cart WHERE CartId=$id ";
+				$result = mysqli_query($conn, $sql);
+			
+				$row = mysqli_fetch_assoc($result);
+				
+				$cart = $row['CartId']; 
+				$quantity = $row['Quantity'];
+				$price = $row['TotalAmount'];
+				$total = $total + $row['TotalAmount'];
+			//	$query = "INSERT INTO orders (OrderId,Quantity,TotalAmount) VALUES ('$cart','$quantity','$total')";
+			//	$query_run = mysqli_query($conn, $query);
+				
+		}	
+	
+		if(isset($_POST['check'])){
+			
+			$mode = $_POST['choice'];
+			$name = $_POST['name'];
+			$contact = $_POST['contact'];
+			$address = $_POST['address'];
+			
+		}
+		
+		?>
+		<div class = "payment">
+		
+		<center style = "margin-bottom:50px; marging-top: 50px;">
+		<div class = "inputs">
+		<h2>Confirm Payment</h2><br><br>
+			<h2 class = "name">
+				Mode of Payment 
+				<h4><?php echo $mode?><h4>
+			</h2> 
+			<h2 class = "name">
+				Name 
+				<h4><?php echo $name?><h4>
+			</h2> 
+			<h2 class = "name">
+				Contact No. 
+				<h4><?php echo $contact?><h4>
+			</h2> 
+			<h2 class = "name">
+				Address 
+				<h4><?php echo $address?><h4>
+			</h2> 
 		</div>
-
-
-			<div class ="table-container">
-				<table class = "table-content">
-				<thead>
-					<tr>
-						<td>Cart Id</td>
-						<td>Product Name</td>
-						<td>Product Price</td>
-						<td>Quantity</td>
-						<td>Total Amount</td>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
-						$conn = mysqli_connect('localhost', 'root', '', 'ecommerce');
-						if ($conn -> connect_error){
-							die("Connection failed:". $conn -> connect_error);
-						}
-						
-						$sql = "SELECT cart.CartId, product.ProductName, product.ProductPrice, cart.Quantity, cart.TotalAmount FROM cart INNER JOIN product ON cart.ProductId = product.ProductId";
-						$result = $conn->query($sql);
-						
-						if ($result->num_rows > 0) {
-							while ($row = $result -> fetch_assoc()) {
-								echo "<tr><td>". $row["CartId"]."</td><td>". $row["ProductName"]."</td><td>". $row["ProductPrice"]."</td><td>". $row["Quantity"]."</td><td>". $row["TotalAmount"]. "</td></tr>";
-							}
-							echo "</table>";
-						}
-						else {
-							echo "0 result";
-						}
-						
-						$conn -> close();					
-						
-					?>
-				</tbody>
-				</table>
+		<div class = "payment-button">
+		<form method = "POST" action = "confirm-payment.php">
+			<div class = "checkout-button">
+				<button class = "btn-checkout" type = "Submit" name = "checkout" >Checkout</button>
 			</div>
+			</form>
+			<form class = "cancel-button" method = "POST" action = "insert-orders.php">
+				<button  class = "btn-cancel" type = "submit" value = "<?php echo $cartid; ?>">Cancel</button>
+			</form>
 		</div>
-		<div class = "page-btn" style = "margin-left: 550px;">
-			<span>1</span>
-			<span>2</span>
-			<span>3</span>
-			<span>4</span>
-			<span>5</span>
-			<span>&#8594;</span>
+		</center>
 		</div>
+		
+		
 		<footer>
 			<div class = "footer-content">
 				<div class = "contact">
@@ -136,3 +164,12 @@
 	</body>
 	
 </html>
+<script>
+	function cancelFunction() {
+		window.location.href = 'insert-orders.php'
+	}
+	function checkoutFunction() {
+		window.location.href = 'insert-orders.php'
+	}
+
+</script>

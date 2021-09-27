@@ -18,7 +18,7 @@
 /*footer*/
 .footer-content {
 	height: 150px;
-	background-color:#111111;
+	background-color:#111111 !important;
 	color: white;
 	display: flex;
 	justify-content: center;
@@ -304,11 +304,23 @@
 	background: #373737;
 	color: white;
 }
+.item-container .row .col-2 .confirm-button button {
+	background: white !important;
+	color: black !important;
+	border: 2px solid black;
+	border-radius: 5px;
+	font-size: 20px;
+}
+.item-container .row .col-2 .confirm-button button:hover {
+	background: #373737 !important;
+	color: white !important;
+}
 .item-container .row .col-2 .buttons {
 	margin: 25px;
 	display:flex;
 	justify-content: center;
 }
+
 /*Add to Cart confirm*/
 .confirm-button button {
 	border: 2px solid black;
@@ -355,7 +367,7 @@
 	justify-content: center;
 	align-items: center;
 	height: 75vh;
-	width: 100vh;
+	width: 120vh !important;
 	flex-direction: column;
 	text-align:center;
 	margin: 50px auto;
@@ -378,7 +390,7 @@
 	border: 2px solid black;
 	border-radius: 5px;
 	font-size: 20px;
-	width: 100px;
+	width: 120px;
 }
 .payment-form button:hover {
 	background: #373737;

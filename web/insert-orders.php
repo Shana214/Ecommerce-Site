@@ -1,7 +1,14 @@
+<?php
+session_start();
+if(isset($_POST['cartid'])){	
+	$_SESSION['cart'] = $_POST['cartid'];
+}
+
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Cart</title>
+		<title>Checkout Items</title>
 		<meta charset = "utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
@@ -44,66 +51,117 @@
 			</nav>
 		</header>
 		
-		<div class = "cart">
+		<div class = "cart-checkout">
 		<div>
 			<div class = "breadcrumbs">
-			<h4><a href="userhomepage.html">Home</a>><a href="cart.php">Cart</a></h4>
+				<h4><a href="userhomepage.php">Home</a>><a href="cart.php">Cart</a>><a href="cart-checkout.php">Checkout Items</a>><a href="insert-orders.php">Confirm</a></h4>
 			</div>
-			<h2 class = "cart-title">CART</h2>
-			<div class = "cart-buttons">
-			<a href="cart-checkout.php"><button class="btn checkout">Checkout</button></a>
-			<a href="cart-remove.php"><button class="btn remove">Remove Item/s</button></a>
-			<a href="cart-edit.php"><button class="btn edit">Edit Item</button></a></br></br></br>
-			</div>
+
 		</div>
-
-
-			<div class ="table-container">
+			<div class = "table-container">
+			<form method = "POST" action = "payment.php">
+					<h2 class = "cart-title">Confirm Checkout Items</h2>
+					
 				<table class = "table-content">
 				<thead>
 					<tr>
 						<td>Cart Id</td>
-						<td>Product Name</td>
-						<td>Product Price</td>
 						<td>Quantity</td>
-						<td>Total Amount</td>
+						<td>Price</td>
 					</tr>
 				</thead>
 				<tbody>
 					<?php
-						$conn = mysqli_connect('localhost', 'root', '', 'ecommerce');
-						if ($conn -> connect_error){
-							die("Connection failed:". $conn -> connect_error);
-						}
-						
-						$sql = "SELECT cart.CartId, product.ProductName, product.ProductPrice, cart.Quantity, cart.TotalAmount FROM cart INNER JOIN product ON cart.ProductId = product.ProductId";
-						$result = $conn->query($sql);
-						
-						if ($result->num_rows > 0) {
-							while ($row = $result -> fetch_assoc()) {
-								echo "<tr><td>". $row["CartId"]."</td><td>". $row["ProductName"]."</td><td>". $row["ProductPrice"]."</td><td>". $row["Quantity"]."</td><td>". $row["TotalAmount"]. "</td></tr>";
-							}
-							echo "</table>";
-						}
-						else {
-							echo "0 result";
-						}
-						
-						$conn -> close();					
-						
-					?>
+	
+	
+	 $conn = mysqli_connect('localhost', 'root', '', 'ecommerce');
+	 if (mysqli_connect_errno()) {
+        echo 'Failed to connect to MySQL server: ' . mysqli_connect_error();   
+	}
+	if(isset($_POST['checkout'])){
+		
+		$cartid = $_POST['cartid'];
+		$total = 0;
+		foreach($cartid as $id){
+				$CartID = $id;
+				$sql = "SELECT CartId, Quantity, TotalAmount FROM cart WHERE CartId=$id ";
+				$result = mysqli_query($conn, $sql);
+			
+				$row = mysqli_fetch_assoc($result);
+				
+				$cart = $row['CartId']; 
+				$quantity = $row['Quantity'];
+				$price = $row['TotalAmount'];
+				$total = $total + $row['TotalAmount'];
+				
+				?>
+				<tr>
+					<td><?php echo $cart ?></td>
+					<td><?php echo $quantity ?></td>
+					<td><?php echo $price ?></td>
+				</tr>
+				
+				<?php
+			//	$query = "INSERT INTO orders (OrderId,Quantity,TotalAmount) VALUES ('$cart','$quantity','$total')";
+			//	$query_run = mysqli_query($conn, $query);
+				
+		}	
+			echo "<tr><th colspan =2>"."Total:"."<td>". $total ."</td>"."</th></tr>";
+	}
+			
+	?>
+												
 				</tbody>
-				</table>
+				</table>	
+						
+					</form>
+						<div class = "payment-form">
+		<form method = "POST" action = "payment.php">
+		<h2>Payment</h2>
+		<div class = "radio-buttons">
+			<label class="radio-inline">
+				<input type="radio" name="choice" value = "Gcash"> Gcash
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="choice" value = "Paymaya"> Paymaya
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="choice" value = "BankXXX"> BankXXX
+			</label>
+			<label class="radio-inline">
+				<input type="radio" name="choice" value = "Cash on Delivery"> Cash on Delivery
+			</label>
+		</div>
+		<center class = "inputs">
+			<label class = "name">
+				Name </br>
+				<input type="input" placeholder = "Name" name="name"> 
+			</label> </br>
+			<label class = "name">
+				Contact No. </br>
+				<input type="input" placeholder = "Contact no." name="contact"> 
+			</label> </br>
+			<label class = "name">
+				Address </br>
+				<input type="input" placeholder = "Address" name="address"> 
+			</label> </br>
+		</center>
+		<center class = "payment-buttons">
+			<div class = "checkout-button">
+				<button name = "check" class = "btn-checkout" type = "submit" >Checkout</button>
+			</div>
+			<div class = "cancel-button">
+				<button onclick = "cancelFunction()"class = "btn-cancel" type = "button"> Cancel</button>
+			</div>
+		</center>
+	
+		</form>
+		</div>
 			</div>
 		</div>
-		<div class = "page-btn" style = "margin-left: 550px;">
-			<span>1</span>
-			<span>2</span>
-			<span>3</span>
-			<span>4</span>
-			<span>5</span>
-			<span>&#8594;</span>
-		</div>
+			
+	
+
 		<footer>
 			<div class = "footer-content">
 				<div class = "contact">

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Remove Items</title>
+		<title>Checkout Items</title>
 		<meta charset = "utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
@@ -49,16 +49,19 @@
 			<div class = "breadcrumbs">
 				<h4><a href="userhomepage.html">Home</a>><a href="cart.php">Cart</a>><a href="cart-checkout.php">Checkout Items</a></h4>
 			</div>
-			<h2 class = "cart-title">Checkout Items</h2>
-			<div class = "cart-buttons">
-				<a href="cart.php"><button class="btn back">Back</button></a>
-				<button class="btn checkout">Checkout</button></br></br></br>
-			</div>
+			
 		</div>
 			<div class = "table-container">
+			<form method = "POST" action = "insert-orders.php">
+					<h2 class = "cart-title">Checkout Items</h2>
+					<div class = "cart-buttons">
+						<a href="cart.php"><button class="btn back" type = "button">Back</button></a>
+						<button name = "checkout" class="btn checkout" type = "submit">Checkout</button></br></br></br>
+					</div>
 				<table class = "table-content">
 				<thead>
 					<tr>
+						<td>Select</td>
 						<td>Cart Id</td>
 						<td>Product Name</td>
 						<td>Quantity</td>
@@ -73,13 +76,24 @@
 						}
 						
 						$sql = "SELECT cart.CartId, product.ProductName, cart.Quantity, cart.TotalAmount FROM cart INNER JOIN product ON cart.ProductId = product.ProductId";
-						$result = $conn->query($sql);
+						$result = mysqli_query($conn, $sql);
 						
-						if ($result->num_rows > 0) {
-							while ($row = $result -> fetch_assoc()) {
-								echo "<tr><td>". $row["CartId"]."</td><td>". $row["ProductName"]."</td><td>". $row["Quantity"]."</td><td>". $row["TotalAmount"]. "</td></tr>";
-							}
-							echo "</table>";
+						if (mysqli_num_rows($result) > 0) {
+							
+								foreach($result as $CartID){
+								?>
+								<tr>
+								<td><input type = "checkbox" name = "cartid[]" value = "<?= $CartID['CartId'] ?>"></td>
+								<td><?php echo $CartID['CartId']?></a></td>
+								<td><?php echo $CartID['ProductName']?> </td>
+								<td><?php echo $CartID['Quantity']?> </td>
+								<td><?php echo $CartID['TotalAmount']?> </td>
+								</tr>
+
+								<?php
+								}
+							
+							
 						}
 						else {
 							echo "0 result";

@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -47,7 +48,7 @@
 		
 		<div class = "item-container">
 			<h2>ITEM</h2>
-			<form enctype = "multipart/form-data" >
+			<form enctype = "multipart/form-data" method = "POST" action = "add.php">
 			<?php
 		$conn = mysqli_connect('localhost', 'root', '', 'ecommerce');
 			if(isset($_GET['id'])){
@@ -62,9 +63,17 @@
 				$ProductPRICE  = $row['ProductPrice'];
 				$ProductDESC = $row['ProductDescription'];
 				
+				session_start();
+
+				$_SESSION['productid'] = $ProductID;
+				$_SESSION['productname'] = $ProductNAME;
+				$_SESSION['productprice'] = $ProductPRICE;
+				
+				
 		}
 		 
 		?>
+
 			<div class = "row">
 				<div class = "col-2" >
 					<?php echo $ProductIMG ?>
@@ -77,21 +86,20 @@
 					<h2>Quantity</h2>
 					<div class = "quantity">
 						<button class = "btn minus-btn disabled" type = "button">-</button>
-						<input type = "text" id = "quantity" value = "1" readonly>
+						<input type = "text" name = "quantity" id = "quantity" value = "1" readonly>
 						<button class = "btn plus-btn " type = "button">+</button>
 					</div>
 				
 					<div class = "buttons">
 						<div class = "cart-button">
-							<button class = "btn cart " type = "button"><a href='add.php?id=<?php echo  $row["ProductId"] ?>' style="text-decoration: none; color:black;">Add to Cart</a></button>
+							<button class = "btn cart " name = "add" type = "submit">Add to Cart</button>
 						</div>
-						<div class = "checkout-button">
-							<button class = "btn check " onclick = "checkFunction()" type = "button">Checkout</button>
-						</div>
+		
 					</div>
 				</div>
 				
 			</div>
+		
 		</div>	
 		</form>
 		<footer>
@@ -127,13 +135,7 @@
 	
 </html>
 <script>
-	function addFunction() {
-		location.replace("AddtoCart.html")
-	}
-	function checkFunction() {
-		location.replace("userhomepage.php")
-	}
-	
+
 	document.querySelector(".minus-btn").setAttribute("disabled","disabled");
 					
 		var valueCount
