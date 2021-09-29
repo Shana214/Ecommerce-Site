@@ -11,19 +11,19 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Order Management</title>
+		<title>Dashboard</title>
 		<meta charset = "utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 	</head>
 	<body>
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark pt-3 pb-3">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="adminpage.php" style = "margin-right: 250px; margin-left: 50px; font-size: 20px;">LOGO</a>
+					<a class="navbar-brand" href="adminpage.html" style = "margin-right: 250px; margin-left: 50px; font-size: 20px;">LOGO</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
@@ -46,81 +46,23 @@
 				</div>
 			</nav>
 		</header>
-		
-		<div class = "cart">
-		<br><br>
-		<div align ="LEFT">
-			<div class="breadcrumbs">
-			<h4><a href="adminpage.php">Dashboard</a>><a href="order-mgmt.php">Order Management</a></h4>
-			</div>		
-			<h4>Order Management</h4>
-			<a href="adminpage.php"><button class="btn remove">Back</button></a>
-			<a href="order-mgmt-delete.php"><button class="btn remove">Delete Order</button></a>
-			<a href="order-mgmt-edit.php"><button class="btn edit">Edit Order</button></a>
+		<div align = "center" style ="margin-top: 25px;">
+		<h4 style ="margin-top: 25px;">Administrator Dashboard</h4>
 		</div>
-			<div align="center">
-			<style>
-				table, th, td {
-					 border:5px solid black;
-				}
-			</style>
-				<br><br>
-
-				<div class ="table-container">
-				<table class = "table-content">
-				<thead>
-					<tr>
-						<td>Order ID</td>
-						<td>Customer ID</td>
-						<td>Product Name</td>
-						<td>Product Price</td>
-						<td>Quantity</td>
-						<td>Total Amount</td>
-						<td>Order Date</td>
-					</tr>
-				</thead>
-				<tbody>
-					
-				<?php
-				$servername = "localhost";
-				$username = "root";
-				$password = "";
-				$dbname = "ecommerce";
-
-				// Create connection
-				$conn = new mysqli($servername, $username, $password, $dbname);
-				// Check connection
-				if ($conn->connect_error) {
-					die("Connection failed: " . $conn->connect_error);
-				}
-
-
-				$sql = "SELECT * FROM orders";
-				$result = $conn->query($sql);
-
-				if ($result->num_rows > 0) {
-					 // output data of each row
-					 while($row = $result->fetch_assoc()) {
-						echo "<tr><td>".$row["OrderId"]."</td><td>".$row["CustomerId"]."</td><td>".$row["ProductName"]."</td><td>".$row["ProductPrice"]."</td><td>".$row["Quantity"]."</td><td> ".$row["TotalAmount"]."</td><td> ".$row["OrderDate"]."</td></tr>";
-					}
-					echo "</table>";
-					} else {
-					  echo "There are no orders at the moment";
-					}		
-				$conn->close();
-				?>
-
-
-
-
-
-				</tbody>
-				</table>
-				<br>
-
+		<div class = "account">
+			<div class = "col-img">
+				<a href="order-list.php"><img src = "assets/img/orders.png" height="200px" width="200px"></a>
+				<a href="order-list.php">User Orders</a>			
+			</div>
+			<div class = "col-img">
+				<a href="user-mgmt.php"><img src="assets/img/usrmng.png" height="200px" width="200px"></a>
+				<a href="user-mgmt.php">User Management</a>
+			</div>
+			<div class = "col-img">
+				<a href="order-mgmt.php"><img src="assets/img/orders.png" height="200px" width="200px">
+				<a href="order-mgmt.php">Order Management</a>	
 			</div>
 		</div>
-
 		<footer>
 			<div class = "footer-content">
 				<div class = "contact">

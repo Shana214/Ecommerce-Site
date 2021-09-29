@@ -1,3 +1,13 @@
+<?php
+    session_start();
+	if (isset($_SESSION['AdminEmail']) && isset($_SESSION['AdminPassword'])){
+		
+	}
+	else{
+		header("location: adminlogin.php");
+	}	
+
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -13,7 +23,7 @@
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark pt-3 pb-3">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="adminpage.html" style = "margin-right: 250px; margin-left: 50px; font-size: 20px;">LOGO</a>
+					<a class="navbar-brand" href="adminpage.php" style = "margin-right: 250px; margin-left: 50px; font-size: 20px;">LOGO</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
@@ -27,10 +37,8 @@
 								Admin
 							    </a>
 							    <ul class="dropdown-menu me-auto" aria-labelledby="navbarDropdown">
-									<li><a class="dropdown-item" href="#">Account</a></li>
-									<li><a class="dropdown-item" href="#">Settings</a></li>
 									<li><hr class="dropdown-divider"></li>
-									<li><a class="dropdown-item" href="logoffadmin.php">Logout</a></li>
+									<li><a class="dropdown-item" href="adminOut.php?logout">Logout</a></li>
 							    </ul>
 							</li>
 					    </ul>
@@ -42,11 +50,11 @@
 		<div class = "cart">
 		<div>
 			<div class = "breadcrumbs">
-				<h4><a href="adminpage.html">Dashboard</a>><a href="order-list.php">Customer's Orders</a></h4>
+				<h4><a href="adminpage.php">Dashboard</a>><a href="order-list.php">Customer's Orders</a></h4>
 			</div>
 			<h2 class = "cart-title">Customer's Orders</h2>
 			<div class = "admin-btn" style = "margin-right:70px;">
-				<a href="adminpage.html"><button class="btn back">Back</button></a></br></br></br>
+				<a href="adminpage.php"><button class="btn back">Back</button></a></br></br></br>
 				
 			</div>
 		</div>

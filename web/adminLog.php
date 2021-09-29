@@ -31,7 +31,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             	$_SESSION['AdminEmail'] = $row['AdminEmail'];
             	$_SESSION['AdminPassword'] = $row['AdminPassword'];
             	$_SESSION['AdminId'] = $row['AdminId'];
-            	header("Location: adminpage.html");
+            	header("Location: adminpage.php");
 		        exit();
             }else{
 				header("Location: adminlogin.php?error=Incorect User name or password");
@@ -44,6 +44,6 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 	}
 	
 }else{
-	header("Location: adminpage.html");
+	header("Location: adminpage.php");
 	exit();
 }

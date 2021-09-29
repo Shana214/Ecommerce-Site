@@ -1,3 +1,13 @@
+<?php
+    session_start();
+	if (isset($_SESSION['AdminEmail']) && isset($_SESSION['AdminPassword'])){
+		
+	}
+	else{
+		header("location: adminlogin.php");
+	}	
+
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -13,7 +23,7 @@
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark pt-3 pb-3">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="userhomepage.html" style = "margin-right: 250px; margin-left: 50px; font-size: 20px;">LOGO</a>
+					<a class="navbar-brand" href="adminpage.php" style = "margin-right: 250px; margin-left: 50px; font-size: 20px;">LOGO</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
@@ -34,7 +44,7 @@
 							    </a>
 							    <ul class="dropdown-menu me-auto" aria-labelledby="navbarDropdown">
 									<li><hr class="dropdown-divider"></li>
-									<li><a class="dropdown-item" href="logoff.php">Logout</a></li>
+									<li><a class="dropdown-item" href="adminOut.php?logout">Logout</a></li>
 							    </ul>
 							</li>
 					    </ul>
@@ -46,7 +56,7 @@
 		<div class = "cart">
 		<div align ="LEFT">
 		<div class="breadcrumbs">
-			<h4><a href="admin-dashboard.html">Dashboard</a>><a href="user-mgmt.php">User Management</a>><a href="user-mgmt-edit.php">Edit</a></h4>
+			<h4><a href="adminpage.php">Dashboard</a>><a href="user-mgmt.php">User Management</a>><a href="user-mgmt-edit.php">Edit</a></h4>
 			<div>
 			<h4>User Management(Edit)</h4>
 			
