@@ -1,4 +1,13 @@
+<?php
+    session_start();
+	if (isset($_SESSION['CustomerEmail']) && isset($_SESSION['CustomerPassword'])){
+		
+	}
+	else{
+		header("location: userlogin.php");
+	}	
 
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -37,7 +46,7 @@
 									<li><a class="dropdown-item" href="account.html">Account</a></li>
 									<li><a class="dropdown-item" href="settings.php">Settings</a></li>
 									<li><hr class="dropdown-divider"></li>
-									<li><a class="dropdown-item" href="logoff.php">Logout</a></li>
+									<li><a class="dropdown-item" href="userOut.php?logout">Logout</a></li>
 							    </ul>
 							</li>
 					    </ul>
@@ -63,8 +72,6 @@
 				$ProductPRICE  = $row['ProductPrice'];
 				$ProductDESC = $row['ProductDescription'];
 				
-				session_start();
-
 				$_SESSION['productid'] = $ProductID;
 				$_SESSION['productname'] = $ProductNAME;
 				$_SESSION['productprice'] = $ProductPRICE;

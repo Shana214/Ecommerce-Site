@@ -6,8 +6,16 @@
 	}
 	$ID = $_POST['id'];
 	$Quantity = $_POST['quantity'];
+	$query = "SELECT ProductPrice FROM cart WHERE CartId = $ID  " ;
+	$result = mysqli_query($conn, $query);
+	$row = mysqli_fetch_assoc($result);
 	
-	$query = "UPDATE cart SET Quantity = $Quantity WHERE CartId = $ID  " ;
+	$price = $row['ProductPrice'];
+	
+	
+	$total = $Quantity * $price;
+	
+	$query = "UPDATE cart SET Quantity = '$Quantity', TotalAmount = '$total' WHERE CartId = '$ID'  " ;
 	$result = mysqli_query($conn, $query);
 
 	

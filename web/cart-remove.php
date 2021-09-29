@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (isset($_SESSION['CustomerEmail']) && isset($_SESSION['CustomerPassword'])){
+		
+	}
+	else{
+		header("location: userlogin.php");
+	}	
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -35,7 +44,7 @@
 							    <ul class="dropdown-menu me-auto" aria-labelledby="navbarDropdown">
 									<li><a class="dropdown-item" href="account.html">Account</a></li>
 									<li><hr class="dropdown-divider"></li>
-									<li><a class="dropdown-item" href="logoff.php">Logout</a></li>
+									<li><a class="dropdown-item" href="userOut.php?logout">Logout</a></li>
 							    </ul>
 							</li>
 					    </ul>
@@ -74,8 +83,9 @@
 					<tr>
 						<td>Cart Id</td>
 						<td>Product Name</td>
+						<td>Product Price</td>
 						<td>Quantity</td>
-						<td>Price</td>
+						<td>Total Amount</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -84,13 +94,13 @@
 						if ($conn -> connect_error){
 							die("Connection failed:". $conn -> connect_error);
 						}
-						
-						$sql = "SELECT cart.CartId, product.ProductName, cart.Quantity, cart.TotalAmount FROM cart INNER JOIN product ON cart.ProductId = product.ProductId";
+						$custId = $_SESSION['CustomerId'];
+						$sql = "SELECT cart.CartId, product.ProductName, product.ProductPrice, cart.Quantity, cart.TotalAmount FROM cart INNER JOIN product ON cart.ProductId = product.ProductId AND cart.CustomerId = '$custId'";
 						$result = $conn->query($sql);
 						
 						if ($result->num_rows > 0) {
 							while ($row = $result -> fetch_assoc()) {
-								echo "<tr><td>". $row["CartId"]."</td><td>". $row["ProductName"]."</td><td>". $row["Quantity"]."</td><td>". $row["TotalAmount"]. "</td></tr>";
+								echo "<tr><td>". $row["CartId"]."</td><td>". $row["ProductName"]."</td><td>". $row["ProductPrice"]."</td><td>". $row["Quantity"]."</td><td>". $row["TotalAmount"]. "</td></tr>";
 							}
 							echo "</table>";
 						}
@@ -98,7 +108,7 @@
 							echo "0 result";
 						}
 						
-						$conn -> close();					
+						$conn -> close();						
 						
 					?>
 				</tbody>

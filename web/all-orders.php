@@ -55,95 +55,37 @@
 				<table class = "table-content">
 				<thead>
 					<tr>
+						<td>Order Id</td>
 						<td>Product Name</td>
+						<td>Product Price</td>
 						<td>Quantity</td>
-						<td>Price</td>
-						<td>Date Ordered</td>
-						<td>Date Delivered</td>
-						<td>Status</td>
+						<td>Total Amount</td>
+						<td>Ordered Date</td>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>AAAA</td>
-						<td>BBBB</td>
-						<td>CCCC</td>
-						<td>DDDD</td>
-						<td>EEEE</td>
-						<td>FFFF</td>
-					</tr>
-					<tr>
-						<td>AAAA</td>
-						<td>BBBB</td>
-						<td>CCCC</td>
-						<td>DDDD</td>
-						<td>EEEE</td>
-						<td>FFFF</td>
-					</tr>
-					<tr>
-						<td>AAAA</td>
-						<td>BBBB</td>
-						<td>CCCC</td>
-						<td>DDDD</td>
-						<td>EEEE</td>
-						<td>FFFF</td>
-					</tr>
-					<tr>
-						<td>AAAA</td>
-						<td>BBBB</td>
-						<td>CCCC</td>
-						<td>DDDD</td>
-						<td>EEEE</td>
-						<td>FFFF</td>
-					</tr>
-					<tr>
-						<td>AAAA</td>
-						<td>BBBB</td>
-						<td>CCCC</td>
-						<td>DDDD</td>
-						<td>EEEE</td>
-						<td>FFFF</td>
-					</tr>
-					<tr>
-						<td>AAAA</td>
-						<td>BBBB</td>
-						<td>CCCC</td>
-						<td>DDDD</td>
-						<td>EEEE</td>
-						<td>FFFF</td>
-					</tr>
-					<tr>
-						<td>AAAA</td>
-						<td>BBBB</td>
-						<td>CCCC</td>
-						<td>DDDD</td>
-						<td>EEEE</td>
-						<td>FFFF</td>
-					</tr>
-					<tr>
-						<td>AAAA</td>
-						<td>BBBB</td>
-						<td>CCCC</td>
-						<td>DDDD</td>
-						<td>EEEE</td>
-						<td>FFFF</td>
-					</tr>
-					<tr>
-						<td>AAAA</td>
-						<td>BBBB</td>
-						<td>CCCC</td>
-						<td>DDDD</td>
-						<td>EEEE</td>
-						<td>FFFF</td>
-					</tr>
-					<tr>
-						<td>AAAA</td>
-						<td>BBBB</td>
-						<td>CCCC</td>
-						<td>DDDD</td>
-						<td>EEEE</td>
-						<td>FFFF</td>
-					</tr>
+					<?php
+						$conn = mysqli_connect('localhost', 'root', '', 'ecommerce');
+						if ($conn -> connect_error){
+							die("Connection failed:". $conn -> connect_error);
+						}
+						
+						$sql = "SELECT OrderId, ProductName, ProductPrice, Quantity, TotalAmount, OrderDate FROM orders";
+						$result = $conn->query($sql);
+						
+						if ($result->num_rows > 0) {
+							while ($row = $result -> fetch_assoc()) {
+								echo "<tr><td>". $row["OrderId"]."</td><td>". $row["ProductName"]."</td><td>". $row["ProductPrice"]."</td><td>". $row["Quantity"]."</td><td>". $row["TotalAmount"]. "</td><td>". $row["OrderDate"]."</td></tr>";
+							}
+							echo "</table>";
+						}
+						else {
+							echo "0 result";
+						}
+						
+						$conn -> close();					
+						
+					?>
 				</tbody>
 				</table>
 			</div>

@@ -21,6 +21,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         header("Location: userlogin.php?error=Password is required");
 	    exit();
 	}else{
+		
 		$sql = "SELECT * FROM customer WHERE CustomerEmail='$email' AND CustomerPassword='$pass'";
 
 		$result = mysqli_query($conn, $sql);

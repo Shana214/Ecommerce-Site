@@ -14,6 +14,8 @@ $conn = mysqli_connect('localhost', 'root', '', 'ecommerce');
 		$id = $_SESSION['id'];
 		$name = $_SESSION['name'];
 		$price = $_SESSION['price'];
+		
+		$custId = $_SESSION['CustomerId'];
 
 		if($_POST['quantity']){
 
@@ -22,7 +24,7 @@ $conn = mysqli_connect('localhost', 'root', '', 'ecommerce');
 		}
 		$total = $price * $quantity;
 		
-		$query = "INSERT INTO cart (CartId, ProductId, ProductName, ProductPrice, Quantity, TotalAmount, CustomerId) VALUES ('$cart','$id','$name','$price','$quantity','$total','912624')";
+		$query = "INSERT INTO cart (CartId, ProductId, ProductName, ProductPrice, Quantity, TotalAmount, CustomerId) VALUES ('$cart','$id','$name','$price','$quantity','$total','$custId')";
 		$query_run = mysqli_query($conn, $query);
 		
 		echo '<script>alert("Checkout Successful")</script>';

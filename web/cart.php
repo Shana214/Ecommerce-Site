@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (isset($_SESSION['CustomerEmail']) && isset($_SESSION['CustomerPassword'])){
+		
+	}
+	else{
+		header("location: userlogin.php");
+	}	
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -35,7 +44,7 @@
 							    <ul class="dropdown-menu me-auto" aria-labelledby="navbarDropdown">
 									<li><a class="dropdown-item" href="account.html">Account</a></li>
 									<li><hr class="dropdown-divider"></li>
-									<li><a class="dropdown-item" href="logoff.php">Logout</a></li>
+									<li><a class="dropdown-item" href="userOut.php?logout">Logout</a></li>
 							    </ul>
 							</li>
 					    </ul>
@@ -56,7 +65,7 @@
 			<a href="cart-edit.php"><button class="btn edit">Edit Item</button></a></br></br></br>
 			</div>
 		</div>
-
+		
 
 			<div class ="table-container">
 				<table class = "table-content">
@@ -75,8 +84,8 @@
 						if ($conn -> connect_error){
 							die("Connection failed:". $conn -> connect_error);
 						}
-						
-						$sql = "SELECT cart.CartId, product.ProductName, product.ProductPrice, cart.Quantity, cart.TotalAmount FROM cart INNER JOIN product ON cart.ProductId = product.ProductId";
+						$custId = $_SESSION['CustomerId'];
+						$sql = "SELECT cart.CartId, product.ProductName, product.ProductPrice, cart.Quantity, cart.TotalAmount FROM cart INNER JOIN product ON cart.ProductId = product.ProductId AND cart.CustomerId = '$custId'";
 						$result = $conn->query($sql);
 						
 						if ($result->num_rows > 0) {

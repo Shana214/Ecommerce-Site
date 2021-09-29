@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (isset($_SESSION['CustomerEmail']) && isset($_SESSION['CustomerPassword'])){
+		
+	}
+	else{
+		header("location: userlogin.php");
+	}	
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -64,8 +73,9 @@
 						<td>Select</td>
 						<td>Cart Id</td>
 						<td>Product Name</td>
+						<td>Product Price</td>
 						<td>Quantity</td>
-						<td>Price</td>
+						<td>Total Amount</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -74,8 +84,8 @@
 						if ($conn -> connect_error){
 							die("Connection failed:". $conn -> connect_error);
 						}
-						
-						$sql = "SELECT cart.CartId, product.ProductName, cart.Quantity, cart.TotalAmount FROM cart INNER JOIN product ON cart.ProductId = product.ProductId";
+						$custId = $_SESSION['CustomerId'];
+						$sql = "SELECT cart.CartId, product.ProductName, product.ProductPrice, cart.Quantity, cart.TotalAmount FROM cart INNER JOIN product ON cart.ProductId = product.ProductId AND cart.CustomerId = '$custId'";
 						$result = mysqli_query($conn, $sql);
 						
 						if (mysqli_num_rows($result) > 0) {
@@ -86,6 +96,7 @@
 								<td><input type = "checkbox" name = "cartid[]" value = "<?= $CartID['CartId'] ?>"></td>
 								<td><?php echo $CartID['CartId']?></a></td>
 								<td><?php echo $CartID['ProductName']?> </td>
+								<td><?php echo $CartID['ProductPrice']?> </td>
 								<td><?php echo $CartID['Quantity']?> </td>
 								<td><?php echo $CartID['TotalAmount']?> </td>
 								</tr>

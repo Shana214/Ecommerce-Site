@@ -1,4 +1,13 @@
+<?php
+    session_start();
+	if (isset($_SESSION['CustomerEmail']) && isset($_SESSION['CustomerPassword'])){
+		
+	}
+	else{
+		header("location: userlogin.php");
+	}	
 
+?>
 <!DOCTYPE HTML>
 
 <html>
@@ -38,7 +47,7 @@
 							    <ul class="dropdown-menu me-auto" aria-labelledby="navbarDropdown">
 									<li><a class="dropdown-item" href="account.html">Account</a></li>
 									<li><hr class="dropdown-divider"></li>
-									<li><a class="dropdown-item" href="logoff.php">Logout</a></li>
+									<li><a class="dropdown-item" href="userOut.php?logout">Logout</a></li>
 							    </ul>
 							</li>
 					    </ul>

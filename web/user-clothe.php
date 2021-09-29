@@ -1,3 +1,13 @@
+<?php
+    session_start();
+	if (isset($_SESSION['CustomerEmail']) && isset($_SESSION['CustomerPassword'])){
+		
+	}
+	else{
+		header("location: userlogin.php");
+	}	
+
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -35,7 +45,7 @@
 							    <ul class="dropdown-menu me-auto" aria-labelledby="navbarDropdown">
 									<li><a class="dropdown-item" href="account.html">Account</a></li>
 									<li><hr class="dropdown-divider"></li>
-									<li><a class="dropdown-item" href="logoff.php">Logout</a></li>
+									<li><a class="dropdown-item" href="userOut.php?logout">Logout</a></li>
 							    </ul>
 							</li>
 					    </ul>
@@ -86,8 +96,8 @@
 							while ($row = $result -> fetch_assoc()) {
 								?>
 								<tr>
-								<td><a href='noUserItemPage.php?id=<?php echo  $row["ProductId"] ?>'><?php echo '<img src = "data:image;base64,'.base64_encode($row['ProductImg']).'" style = "width: 150px; height: 150px;" > ';?></a> </td>
-								<td><a href='noUserItemPage.php?id=<?php echo  $row["ProductId"] ?>' style = "font-size:30px; text-decoration:none; color: black;"><?php echo $row['ProductName']?></a> </td>
+								<td><a href='itemPage.php?id=<?php echo  $row["ProductId"] ?>'><?php echo '<img src = "data:image;base64,'.base64_encode($row['ProductImg']).'" style = "width: 150px; height: 150px;" > ';?></a> </td>
+								<td><a href='itemPage.php?id=<?php echo  $row["ProductId"] ?>' style = "font-size:30px; text-decoration:none; color: black;"><?php echo $row['ProductName']?></a> </td>
 								<td style="font-size:25px"><?php echo "P".$row['ProductPrice']?> </td>
 								</tr>
 								<?php
