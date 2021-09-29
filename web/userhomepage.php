@@ -42,10 +42,24 @@
 							<div id = "avatar"></div>
 							<li class="nav-item dropdown ">
 							    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-								User
+								<?php
+								$conn = mysqli_connect('localhost', 'root', '', 'ecommerce');
+								if ($conn -> connect_error){
+									die("Connection failed:". $conn -> connect_error);
+								}
+								$custId = $_SESSION['CustomerId'];
+								
+								$sql = "SELECT CustomerName FROM customer WHERE CustomerId=$custId ";
+									$result = mysqli_query($conn, $sql);
+								
+									$row = mysqli_fetch_assoc($result);
+									
+									$custname = $row['CustomerName'];
+									echo $custname;
+								 ?>
 							    </a>
 							    <ul class="dropdown-menu me-auto" aria-labelledby="navbarDropdown">
-									<li><a class="dropdown-item" href="account.html">Account</a></li>
+									<li><a class="dropdown-item" href="account.php">Account</a></li>
 									<li><hr class="dropdown-divider"></li>
 									<li><a class="dropdown-item" href="userOut.php?logout">Logout</a></li>
 							    </ul>

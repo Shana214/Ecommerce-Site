@@ -77,19 +77,19 @@
 				<td style="background-color:#979797;"><h2>Customer ID</h2></td><td><input type="text" name= "customerid" id = "customerid"></td>
 				</tr>
 				<tr>
+				<td style="background-color:#979797;"><h2>Product Name</h2></td><td><input type="text" name= "name" id = "name"></td>
+				</tr>
+				<tr>
+				<td style="background-color:#979797;"><h2>Product Price</h2></td><td><input type="text" name= "price" id = "price"></td>
+				</tr>
+				<tr>
 				<td style="background-color:#979797;"><h2>Quantity</h2></td><td><input type="text" name= "quantity" id = "quantity"></td>
 				</tr>
 				<tr>
-				<td style="background-color:#979797;"><h2>Total Amount</h2></td><td><input type="text" name= "totalamount" id = "totalamount"></td>
+				<td style="background-color:#979797;"><h2>Total Amount</h2></td><td><input type="text" name= "amount" id = "amount"></td>
 				</tr>
 				<tr>
-				<td style="background-color:#979797;"><h2>Order Date</h2></td><td><input type="text" name= "orderdate" id = "orderdate"></td>
-				</tr>
-				<tr>
-				<td style="background-color:#979797;"><h2>Ship Date</h2></td><td><input type="text" name= "shipdate" id = "shipdate"></td>
-				</tr>
-				<tr>
-				<td style="background-color:#979797;"><h2>Payment ID</h2></td><td><input type="text" name= "paymentid" id = "paymentid"></td>
+				<td style="background-color:#979797;"><h2>Order Date</h2></td><td><input type="text" name= "date" id = "date"></td>
 				</tr>
 				</table>
 				<br><br>
@@ -101,11 +101,11 @@
 					<tr>
 						<td>Order ID</td>
 						<td>Customer ID</td>
+						<td>Product Name</td>
+						<td>Product Price</td>
 						<td>Quantity</td>
 						<td>Total Amount</td>
 						<td>Order Date</td>
-						<td>Ship Date</td>
-						<td>Payment ID</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -130,7 +130,7 @@
 				if ($result->num_rows > 0) {
 					 // output data of each row
 					 while($row = $result->fetch_assoc()) {
-						echo "<tr><td>".$row["OrderId"]."</td><td>".$row["CustomerId"]."</td><td>".$row["Quantity"]."</td><td>".$row["TotalAmount"]."</td><td>".$row["OrderDate"]."</td><td> ".$row["OrderShipped"]."</td><td> ".$row["PaymentId"]."</td></tr>";
+						echo "<tr><td>".$row["OrderId"]."</td><td>".$row["CustomerId"]."</td><td>".$row["ProductName"]."</td><td>".$row["ProductPrice"]."</td><td>".$row["Quantity"]."</td><td> ".$row["TotalAmount"]."</td><td> ".$row["OrderDate"]."</td></tr>";
 					}
 					echo "</table>";
 					} else {
@@ -147,15 +147,6 @@
 				</table>
 				<br>
 
-				<div class = "page-btn">
-					<span>1</span>
-					<span>2</span>
-					<span>3</span>
-					<span>4</span>
-					<span>5</span>
-					<span>&#8594;</span>
-				</div>
-				
 			</div>
 		</div>
 

@@ -1,5 +1,11 @@
 <?php
 session_start();
+if (isset($_SESSION['CustomerEmail']) && isset($_SESSION['CustomerPassword'])){
+		
+	}
+	else{
+		header("location: userlogin.php");
+	}	
 if(isset($_POST['cartid'])){	
 	$_SESSION['cart'] = $_POST['cartid'];
 }	
@@ -18,14 +24,18 @@ if(isset($_POST['check'])){
         echo 'Failed to connect to MySQL server: ' . mysqli_connect_error();   
 	}
 	else{
-	
+	if(empty($_SESSION['mode'])||empty($_SESSION['Name'])||empty($_SESSION['Contact'])||empty($_SESSION['Address'])){
+		$alert =  "<script>alert('Payment Unsuccessful. Please fill up all fields.'); location.href = 'insert-orders.php' </script>";
+		echo $alert;
+	}
+	else{
 		$mode = $_SESSION['mode'];
 		$Name = $_SESSION['Name'];
 		$contact = $_SESSION['Contact'];
 		$address = $_SESSION['Address'];
 		
 
-		
+		$custId = $_SESSION['CustomerId'];
 		$cartid = $_SESSION['cart'];
 		$total = 0;
 		
@@ -44,18 +54,19 @@ if(isset($_POST['check'])){
 				$total = $row['TotalAmount'];
 				
 		
-				$query = "INSERT INTO orders (OrderId, ProductName, ProductPrice, Quantity, TotalAmount) VALUES ('$cart','$name','$price','$quantity','$total')";
+				$query = "INSERT INTO orders (OrderId, ProductName, ProductPrice, Quantity, TotalAmount,CustomerId) VALUES ('$cart','$name','$price','$quantity','$total','$custId')";
 				$query_run = mysqli_query($conn, $query);
 				
-				$query = "INSERT INTO payment (PaymentId, ModeOfPayment, DeliveryName, DeliveryAddress,	DeliveryContactNo, OrderId) VALUES ('$payment','$mode','$Name','$address','$contact','$cart')";
+				$query = "INSERT INTO payment (PaymentId, ModeOfPayment, DeliveryName, DeliveryAddress,	DeliveryContactNo, OrderId, CustomerId) VALUES ('$payment','$mode','$Name','$address','$contact','$cart','$custId')";
 				$query_run = mysqli_query($conn, $query);
 				
 				$query = "DELETE FROM cart WHERE CartId = $id";
 				$query_run = mysqli_query($conn, $query);
 				
 		}	
-		echo '<script>alert("Checkout Successful")</script>';
-		header('Location: cart.php');
+		$alert =  "<script>alert('Checkout Successfully'); location.href = 'cart.php' </script>";
+		echo $alert;
+	}
 	}
 		
 	

@@ -3,7 +3,13 @@
 	if ($conn -> connect_error){
 		die("Connection failed:". $conn -> connect_error);
 	}
+	else{
+	if(empty($_POST['id']) || empty($_POST['quantity'])){
+		$alert =  "<script>alert('Delete Unsuccessful. Please fill up all fields.'); location.href = 'cart-remove.php' </script>";
+		echo $alert;
 	
+	}
+	else{
 	$ID = $_POST['id'];
 	
 	$query = "DELETE FROM cart WHERE CartId = $ID";
@@ -16,4 +22,6 @@
 	$stmt->close();
 	$conn->close();
 	header("Location: cart-remove.php");
+	}
+	}
 ?>

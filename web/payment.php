@@ -1,10 +1,5 @@
 <?php
-if (isset($_SESSION['CustomerEmail']) && isset($_SESSION['CustomerPassword'])){
-		
-	}
-	else{
-		header("location: userlogin.php");
-	}	
+
 session_start();
 if(isset($_POST['cartid'])){	
 	$_SESSION['cart'] = $_POST['cartid'];

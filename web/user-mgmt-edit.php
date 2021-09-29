@@ -44,11 +44,8 @@
 		</header>
 		
 		<div class = "cart">
-		<br><br>
 		<div align ="LEFT">
-			<A1>WARNING: THIS IS THE ADMINISTRATOR'S DASHBOARD AND NOT THE USER DASHBOARD. INFORMATION ALTERED WITHIN THE DASHBOARD ARE FINAL AND IRREPLACABLE. IF YOU ARE NOT THE WEBSITE'S ADMIN, PLEASE LOGOUT IMMEDIATELY!</A1>
-				<br><br><br>
-			<div class="breadcrumbs">
+		<div class="breadcrumbs">
 			<h4><a href="admin-dashboard.html">Dashboard</a>><a href="user-mgmt.php">User Management</a>><a href="user-mgmt-edit.php">Edit</a></h4>
 			<div>
 			<h4>User Management(Edit)</h4>

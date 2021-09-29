@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (isset($_SESSION['CustomerEmail']) && isset($_SESSION['CustomerPassword'])){
+		
+	}
+	else{
+		header("location: userlogin.php");
+	}	
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -13,14 +22,14 @@
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-dark bg-dark pt-3 pb-3">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="userhomepage.html" style = "margin-right: 250px; margin-left: 50px; font-size: 20px;">LOGO</a>
+					<a class="navbar-brand" href="userhomepage.php" style = "margin-right: 250px; margin-left: 50px; font-size: 20px;">LOGO</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0" >
 							<li class="nav-item">
-							    <a class="nav-link active " aria-current="page" href="userhomepage.html"style=" font-size: 20px; margin-right: 500px;">Home</a>
+							    <a class="nav-link active " aria-current="page" href="userhomepage.php"style=" font-size: 20px; margin-right: 500px;">Home</a>
 							</li>
 						</ul>
 						<ul class="navbar-nav ms-auto mb-2 mb-lg-0" style = "margin-right: 75px;">
@@ -30,13 +39,26 @@
 							<div id = "avatar"></div>
 							<li class="nav-item dropdown ">
 							    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-								User
+								<?php
+								$conn = mysqli_connect('localhost', 'root', '', 'ecommerce');
+								if ($conn -> connect_error){
+									die("Connection failed:". $conn -> connect_error);
+								}
+								$custId = $_SESSION['CustomerId'];
+								
+								$sql = "SELECT CustomerName FROM customer WHERE CustomerId=$custId ";
+									$result = mysqli_query($conn, $sql);
+								
+									$row = mysqli_fetch_assoc($result);
+									
+									$custname = $row['CustomerName'];
+									echo $custname;
+								 ?>
 							    </a>
 							    <ul class="dropdown-menu me-auto" aria-labelledby="navbarDropdown">
 									<li><a class="dropdown-item" href="account.html">Account</a></li>
-									<li><a class="dropdown-item" href="settings.php">Settings</a></li>
 									<li><hr class="dropdown-divider"></li>
-									<li><a class="dropdown-item" href="logoff.php">Logout</a></li>
+									<li><a class="dropdown-item" href="userOut.php?logout">Logout</a></li>
 							    </ul>
 							</li>
 					    </ul>
@@ -47,7 +69,7 @@
 		<div class = "cart">
 		<div>
 			<div class = "breadcrumbs">
-				<h4><a href="userhomepage.html">Home</a>><a href="account.html">Account</a>><a href="all-orders.php">All Orders</a></h4>
+				<h4><a href="userhomepage.php">Home</a>><a href="account.html">Account</a>><a href="all-orders.php">All Orders</a></h4>
 			</div>
 			<h2 class = "cart-title">All Orders</h2>
 		</div>
@@ -69,8 +91,8 @@
 						if ($conn -> connect_error){
 							die("Connection failed:". $conn -> connect_error);
 						}
-						
-						$sql = "SELECT OrderId, ProductName, ProductPrice, Quantity, TotalAmount, OrderDate FROM orders";
+						$custId = $_SESSION['CustomerId'];
+						$sql = "SELECT OrderId, ProductName, ProductPrice, Quantity, TotalAmount, OrderDate FROM orders WHERE CustomerId = '$custId'";
 						$result = $conn->query($sql);
 						
 						if ($result->num_rows > 0) {

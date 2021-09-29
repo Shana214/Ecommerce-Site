@@ -4,7 +4,14 @@
 	if ($conn -> connect_error){
 		die("Connection failed:". $conn -> connect_error);
 	}
-	$ID = $_POST['id'];
+	else{
+	if(empty($_POST['id']) || empty($_POST['quantity'])){
+		$alert =  "<script>alert('Edit Unsuccessful. Please fill up all fields.'); location.href = 'cart-edit.php' </script>";
+		echo $alert;
+	
+	}
+	else{
+		$ID = $_POST['id'];
 	$Quantity = $_POST['quantity'];
 	$query = "SELECT ProductPrice FROM cart WHERE CartId = $ID  " ;
 	$result = mysqli_query($conn, $query);
@@ -18,14 +25,15 @@
 	$query = "UPDATE cart SET Quantity = '$Quantity', TotalAmount = '$total' WHERE CartId = '$ID'  " ;
 	$result = mysqli_query($conn, $query);
 
-	
-
-	if($result){
-		header("Location: cart-edit.php");
+		if($result){
+			$alert =  "<script>alert('Edit Successful'); location.href = 'cart-edit.php' </script>";
+			echo $alert;
+		}
+		else {
+			die(mysqli_error($conn));
+		}
 	}
-	else {
-		die(mysqli_error($conn));
-	}
+}	
 	
 	
 

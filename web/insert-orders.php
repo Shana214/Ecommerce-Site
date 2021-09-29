@@ -43,12 +43,26 @@ if(isset($_POST['cartid'])){
 							<div id = "avatar"></div>
 							<li class="nav-item dropdown ">
 							    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style=" font-size: 20px;">
-								User
+									<?php
+								$conn = mysqli_connect('localhost', 'root', '', 'ecommerce');
+								if ($conn -> connect_error){
+									die("Connection failed:". $conn -> connect_error);
+								}
+								$custId = $_SESSION['CustomerId'];
+								
+								$sql = "SELECT CustomerName FROM customer WHERE CustomerId=$custId ";
+									$result = mysqli_query($conn, $sql);
+								
+									$row = mysqli_fetch_assoc($result);
+									
+									$custname = $row['CustomerName'];
+									echo $custname;
+								 ?>
 							    </a>
 							    <ul class="dropdown-menu me-auto" aria-labelledby="navbarDropdown">
-									<li><a class="dropdown-item" href="account.html">Account</a></li>
+									<li><a class="dropdown-item" href="account.php">Account</a></li>
 									<li><hr class="dropdown-divider"></li>
-									<li><a class="dropdown-item" href="logoff.php">Logout</a></li>
+									<li><a class="dropdown-item" href="userOut.php?logout">Logout</a></li>
 							    </ul>
 							</li>
 					    </ul>
@@ -71,9 +85,10 @@ if(isset($_POST['cartid'])){
 				<table class = "table-content">
 				<thead>
 					<tr>
-						<td>Cart Id</td>
+						<td>Product Name</td>
+						<td>Product Price</td>
 						<td>Quantity</td>
-						<td>Price</td>
+						<td>Total Amount</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -84,25 +99,33 @@ if(isset($_POST['cartid'])){
 	 if (mysqli_connect_errno()) {
         echo 'Failed to connect to MySQL server: ' . mysqli_connect_error();   
 	}
-	if(isset($_POST['checkout'])){
+	else{
+	if(empty($_POST['cartid'])){
+		$alert =  "<script>alert('Please choose items to checkout.'); location.href = 'cart-checkout.php' </script>";
+		echo $alert;
 		
-		$cartid = $_POST['cartid'];
+	}
+	else{
+		if(isset($_POST['checkout'])){
+			$cartid = $_POST['cartid'];
 		$total = 0;
 		foreach($cartid as $id){
 				$CartID = $id;
-				$sql = "SELECT CartId, Quantity, TotalAmount FROM cart WHERE CartId=$id ";
+				$sql = "SELECT ProductName, ProductPrice, Quantity, TotalAmount FROM cart WHERE CartId=$id ";
 				$result = mysqli_query($conn, $sql);
 			
 				$row = mysqli_fetch_assoc($result);
 				
-				$cart = $row['CartId']; 
+				$name = $row['ProductName']; 
+				$p = $row['ProductPrice'];
 				$quantity = $row['Quantity'];
 				$price = $row['TotalAmount'];
 				$total = $total + $row['TotalAmount'];
 				
 				?>
 				<tr>
-					<td><?php echo $cart ?></td>
+					<td><?php echo $name ?></td>
+					<td><?php echo $p ?></td>
 					<td><?php echo $quantity ?></td>
 					<td><?php echo $price ?></td>
 				</tr>
@@ -112,9 +135,10 @@ if(isset($_POST['cartid'])){
 			//	$query_run = mysqli_query($conn, $query);
 				
 		}	
-			echo "<tr><th colspan =2>"."Total:"."<td>". $total ."</td>"."</th></tr>";
+			echo "<tr><th colspan =3>"."Total:"."<td>". $total ."</td>"."</th></tr>";
+		}
 	}
-			
+	}		
 	?>
 												
 				</tbody>
@@ -122,7 +146,7 @@ if(isset($_POST['cartid'])){
 						
 					</form>
 						<div class = "payment-form">
-		<form method = "POST" action = "payment.php">
+		<form method = "POST" action = "confirm-payment.php">
 		<h2>Payment</h2>
 		<div class = "radio-buttons">
 			<label class="radio-inline">
@@ -200,3 +224,8 @@ if(isset($_POST['cartid'])){
 	</body>
 	
 </html>
+<script>
+	function cancelFunction() {
+        window.location = 'cart-checkout.php';
+    }
+</script>

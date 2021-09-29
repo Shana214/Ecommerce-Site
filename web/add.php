@@ -26,9 +26,9 @@ $conn = mysqli_connect('localhost', 'root', '', 'ecommerce');
 		
 		$query = "INSERT INTO cart (CartId, ProductId, ProductName, ProductPrice, Quantity, TotalAmount, CustomerId) VALUES ('$cart','$id','$name','$price','$quantity','$total','$custId')";
 		$query_run = mysqli_query($conn, $query);
+		$alert =  "<script>alert('Added to Cart Successfully'); location.href = 'userhomepage.php' </script>";
+		echo $alert;
 		
-		echo '<script>alert("Checkout Successful")</script>';
-		header('Location: userhomepage.php');
 	}
 function generateCartKey($conn) {
         $primaryKey = "";
